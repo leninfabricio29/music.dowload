@@ -82,6 +82,23 @@
             background-color: var(--card-bg) !important;
             color: var(--text-gray);
         }
+
+        .stats-container {
+            background-color: var(--card-bg);
+            
+        }
+
+        .stats-number {
+            color: var(--primary-red);
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        .stats-label {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
     </style>
 </head>
 <body>
@@ -102,6 +119,12 @@
                     <h1 class="display-5 fw-bold">YouTube Music Downloader</h1>
                     <p class="lead text-gray">Descarga tus canciones favoritas en formato MP3</p>
                 </div>
+
+                <div class="text-center stats-container rounded p-2 ">
+                    <div class="stats-number" id="visitorCount">0</div>
+                    <div class="stats-label">Personas han usado esta herramienta</div>
+                </div>
+            </div>
 
                 <div class="search-wrapper">
                     <div class="input-group">
