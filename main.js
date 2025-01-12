@@ -63,43 +63,7 @@ async function searchVideos(query) {
     }
 }
 
-function displayResults(videos) {
-    resultsContainer.innerHTML = '';
-    
-    videos.forEach(video => {
-        const videoCard = createVideoCard(video);
-        resultsContainer.appendChild(videoCard);
-    });
-}
 
-function createVideoCard(video) {
-    const videoCard = document.createElement('div');
-    videoCard.className = 'video-card';
-    videoCard.innerHTML = `
-        <img class="video-thumbnail" src="${video.thumbnail}" alt="${video.title}">
-        <div class="video-info">
-            <div class="video-title">${video.title}</div>
-            <div class="channel-info">
-                <small>
-                    <i class="fas fa-user"></i> ${video.channelTitle}<br>
-                    <i class="fas fa-calendar"></i> ${video.publishedAt}
-                </small>
-            </div>
-            <button class="download-btn" data-video-id="${video.id}">
-                <i class="fas fa-download"></i> Descargar MP3
-            </button>
-            <div class="progress-container">
-                <div class="progress-bar" id="progress-${video.id}"></div>
-            </div>
-            <div class="status" id="status-${video.id}"></div>
-        </div>
-    `;
-
-    const downloadBtn = videoCard.querySelector('.download-btn');
-    downloadBtn.addEventListener('click', () => downloadVideo(video.id));
-
-    return videoCard;
-}
 
 async function downloadVideo(videoId) {
     const progressBar = document.getElementById(`progress-${videoId}`);
@@ -137,4 +101,68 @@ async function downloadVideo(videoId) {
         progressBar.style.width = "0";
         console.error(error);
     }
+}
+
+// Modificación del JavaScript para manejar el carrusel
+document.addEventListener('DOMContentLoaded', () => {
+    searchInput = document.getElementById('searchInput');
+    searchButton = document.getElementById('searchButton');
+    resultsContainer = document.getElementById('resultsContainer');
+
+    searchButton.addEventListener('click', handleSearch);
+    searchInput.addEventListener('keypress', handleEnterKey);
+});
+
+function displayResults(videos) {
+    resultsContainer.innerHTML = '';
+    
+    // Agrupar videos en grupos de 3 para el carrusel
+    for (let i = 0; i < videos.length; i += 3) {
+        const carouselItem = document.createElement('div');
+        carouselItem.className = `carousel-item ${i === 0 ? 'active' : ''}`;
+        
+        const row = document.createElement('div');
+        row.className = 'row';
+        
+        // Agregar hasta 3 videos por slide
+        for (let j = i; j < Math.min(i + 3, videos.length); j++) {
+            const col = document.createElement('div');
+            col.className = 'col-md-4';
+            col.appendChild(createVideoCard(videos[j]));
+            row.appendChild(col);
+        }
+        
+        carouselItem.appendChild(row);
+        resultsContainer.appendChild(carouselItem);
+    }
+}
+
+function createVideoCard(video) {
+    const videoCard = document.createElement('div');
+    videoCard.className = 'video-card';
+    videoCard.innerHTML = `
+        <img class="video-thumbnail img-fluid" src="${video.thumbnail}" alt="${video.title}">
+        <div class="video-info p-3">
+            <div class="video-title text-light">${video.title}</div>
+            <div class="channel-info text-gray">
+                <small>
+                    <i class="fas fa-user me-1"></i> ${video.channelTitle}<br>
+                    <i class="fas fa-calendar me-1"></i> ${video.publishedAt}
+                </small>
+            </div>
+            <button class="btn btn-youtube w-100 mt-3" data-video-id="${video.id}">
+                <i class="fas fa-download me-1"></i> Descargar MP3
+            </button>
+            <div class="progress mt-2" style="display: none;">
+                <div class="progress-bar bg-youtube" id="progress-${video.id}" 
+                     role="progressbar" style="width: 0%"></div>
+            </div>
+            <div class="status text-gray mt-2" id="status-${video.id}"></div>
+        </div>
+    `;
+
+    const downloadBtn = videoCard.querySelector('.btn-youtube');
+    downloadBtn.addEventListener('click', () => downloadVideo(video.id));
+
+    return videoCard;
 }

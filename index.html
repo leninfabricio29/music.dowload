@@ -4,15 +4,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YouTube Music Downloader</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome para los iconos -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- Estilos personalizados -->
-    <link href="styles.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-red: #FF0000;
+            --dark-bg: #0F0F0F;
+            --card-bg: #1F1F1F;
+            --text-light: #FFFFFF;
+            --text-gray: #AAAAAA;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+
+        .navbar {
+            background-color: var(--card-bg) !important;
+        }
+
+        .navbar-brand {
+            color: var(--primary-red) !important;
+        }
+
+        .search-wrapper {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+
+        .btn-youtube {
+            background-color: var(--primary-red);
+            color: white;
+            border: none;
+        }
+
+        .btn-youtube:hover {
+            background-color: #CC0000;
+            color: white;
+        }
+
+        .video-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+
+        .carousel-control-prev,
+        .carousel-control-next {
+            width: 5%;
+            background-color: rgba(0,0,0,0.5);
+            border-radius: 50%;
+            height: 50px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .tutorial-step {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+
+        .donation-section {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+
+        .footer {
+            background-color: var(--card-bg) !important;
+            color: var(--text-gray);
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand" href="#">
                 <i class="fab fa-youtube me-2"></i>
@@ -22,51 +95,93 @@
     </nav>
 
     <div class="container py-4">
+        <!-- Search Section -->
         <div class="row justify-content-center">
-            <div class="col-12 col-md-10 col-lg-8">
+            <div class="col-12 col-md-10">
                 <div class="text-center mb-4">
                     <h1 class="display-5 fw-bold">YouTube Music Downloader</h1>
-                    <p class="lead text-muted">Busca y descarga tus canciones favoritas</p>
+                    <p class="lead text-gray">Descarga tus canciones favoritas en formato MP3</p>
                 </div>
 
-                <div class="search-wrapper mb-5">
+                <div class="search-wrapper">
                     <div class="input-group">
-                        <input type="text" 
-                               id="searchInput" 
-                               class="form-control form-control-lg" 
-                               placeholder="Busca una canción..."
-                               aria-label="Búsqueda">
-                        <button class="btn btn-primary btn-lg" id="searchButton">
+                        <input type="text" id="searchInput" class="form-control form-control-lg" placeholder="Busca una canción...">
+                        <button class="btn btn-youtube btn-lg" id="searchButton">
                             <i class="fas fa-search"></i> Buscar
                         </button>
                     </div>
                 </div>
-
-                <!-- Spinner de carga -->
-                <div id="loadingSpinner" class="text-center d-none">
-                    <div class="spinner-border text-primary" role="status">
-                        <span class="visually-hidden">Cargando...</span>
-                    </div>
-                </div>
-
-                <!-- Contenedor de resultados -->
-                <div class="row g-4" id="resultsContainer">
-                    <!-- Los resultados de búsqueda se insertarán aquí -->
-                </div>
             </div>
         </div>
+
+        <!-- Results Carousel -->
+        <div id="videoCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner" id="resultsContainer">
+                <!-- Results will be inserted here -->
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#videoCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#videoCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+        <!-- Tutorial Section -->
+        <section class="tutorial-section my-5">
+            <h2 class="text-center mb-4">Cómo Descargar Música</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="tutorial-step">
+                        <h3><i class="fas fa-search text-youtube"></i> Paso 1</h3>
+                        <p>Busca tu canción favorita usando el nombre de la canción o artista en la barra de búsqueda.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="tutorial-step">
+                        <h3><i class="fas fa-check-circle text-youtube"></i> Paso 2</h3>
+                        <p>Selecciona el video correcto de los resultados mostrados en el carrusel.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="tutorial-step">
+                        <h3><i class="fas fa-download text-youtube"></i> Paso 3</h3>
+                        <p>Haz clic en el botón "Descargar MP3" y espera a que se complete la conversión.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Donation Section -->
+        <section class="donation-section text-center">
+            <h2 class="mb-4">Apoya Este Proyecto</h2>
+            <p class="mb-4">Si encuentras útil esta herramienta, considera hacer una donación para mantener el servicio activo y mejorar sus funcionalidades.</p>
+            <div class="row justify-content-center">
+                <div class="col-md-4 d-flex justify-content-center p-2">
+                    <button class="btn btn-warning">
+                        BANCO PICHINCHA
+                    </button>
+                </div>
+                <div class="col-md-4 d-flex justify-content-center p-2">
+                    <button class="btn btn-success">
+                        BANCO DE LOJA
+                    </button>
+                </div>
+            </div>
+            
+            </div>
+        </section>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer mt-auto py-3 bg-light">
+    <footer class="footer mt-5 py-3">
         <div class="container text-center">
-            <span class="text-muted">© 2024 Desarrollado por Lenin Fabricio</span>
+            <span>© 2024 Desarrollado por Lenin Fabricio</span>
         </div>
     </footer>
 
-    <!-- Bootstrap Bundle con Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Script personalizado -->
     <script src="main.js"></script>
 </body>
 </html>
