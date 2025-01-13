@@ -3,6 +3,10 @@ const YOUTUBE_API_KEY = 'AIzaSyB5tQJNfhfhNboaTvupXr5i1hjjIkjJizM'; // Reemplazar
 const MAX_RESULTS = 10;
 const RAPID_API_KEY = 'f8d8c662a6msh3f2981e403a1283p157679jsn94ae201da60d'; // Tu API key de RapidAPI
 
+
+
+
+
 // Elementos del DOM
 let searchInput;
 let searchButton;
@@ -166,56 +170,3 @@ function createVideoCard(video) {
 
     return videoCard;
 }
-
-// Contador de visitas
-document.addEventListener('DOMContentLoaded', function() {
-    updateVisitorCount();
-});
-
-function updateVisitorCount() {
-    // Obtener el contador actual
-    let count = localStorage.getItem('visitorCount');
-    
-    // Si es la primera visita, inicializar el contador
-    if (!count) {
-        count = 0;
-    }
-    
-    // Incrementar el contador
-    count = parseInt(count) + 1;
-    
-    // Guardar el nuevo valor
-    localStorage.getItem('visitorCount', count);
-    
-    // Actualizar el display con animación
-    const countDisplay = document.getElementById('visitorCount');
-    if (countDisplay) {
-        animateValue(countDisplay, 0, count, 1000);
-    }
-}
-
-// Función para animar el contador
-function animateValue(obj, start, end, duration) {
-    let startTimestamp = null;
-    const step = (timestamp) => {
-        if (!startTimestamp) startTimestamp = timestamp;
-        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-        const current = Math.floor(progress * (end - start) + start);
-        obj.innerHTML = current.toLocaleString();
-        if (progress < 1) {
-            window.requestAnimationFrame(step);
-        }
-    };
-    window.requestAnimationFrame(step);
-}
-
-// Función para formatear números grandes
-function formatNumber(num) {
-    if (num >= 1000000) {
-        return (num / 1000000).toFixed(1) + 'M';
-    }
-    if (num >= 1000) {
-        return (num / 1000).toFixed(1) + 'K';
-    }
-    return num.toString();
-}   
