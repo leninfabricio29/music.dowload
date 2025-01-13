@@ -82,8 +82,10 @@ async function downloadVideo(videoId) {
             headers: {
                 "x-rapidapi-host": "youtube-mp36.p.rapidapi.com",
                 "x-rapidapi-key": RAPID_API_KEY
-            }
+            },
         });
+
+        console.log(response)
 
         progressBar.style.width = "50%";
 
