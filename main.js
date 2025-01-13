@@ -72,6 +72,7 @@ async function searchVideos(query) {
 async function downloadVideo(videoId) {
     const progressBar = document.getElementById(`progress-${videoId}`);
     const status = document.getElementById(`status-${videoId}`);
+    const RAPID_API_USERNAME = 'lenin fabricio'; // Reemplaza con tu nombre de usuario en RapidAPI
 
     try {
         status.innerText = "Iniciando descarga...";
@@ -81,11 +82,10 @@ async function downloadVideo(videoId) {
             method: "GET",
             headers: {
                 "x-rapidapi-host": "youtube-mp36.p.rapidapi.com",
-                "x-rapidapi-key": RAPID_API_KEY
-            },
+                "x-rapidapi-key": RAPID_API_KEY,
+                "User-Agent": `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36 ${RAPID_API_USERNAME}` // Aquí agregamos el nombre de usuario
+            }
         });
-
-        console.log(response)
 
         progressBar.style.width = "50%";
 
@@ -108,6 +108,7 @@ async function downloadVideo(videoId) {
         console.error(error);
     }
 }
+
 
 // Modificación del JavaScript para manejar el carrusel
 document.addEventListener('DOMContentLoaded', () => {
