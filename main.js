@@ -1,10 +1,7 @@
 // Configuración
-const YOUTUBE_API_KEY = 'AIzaSyB5tQJNfhfhNboaTvupXr5i1hjjIkjJizM'; // Reemplazar con tu API key de YouTube
+const YOUTUBE_API_KEY = 'AIzaSyCpBj3GMl7EE0Ik46ZFNMUfaYBm4yj2AwM'; // Reemplazar con tu API key de YouTube
 const MAX_RESULTS = 10;
 const RAPID_API_KEY = 'f8d8c662a6msh3f2981e403a1283p157679jsn94ae201da60d'; // Tu API key de RapidAPI
-
-
-
 
 
 // Elementos del DOM
